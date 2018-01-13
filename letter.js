@@ -14,6 +14,6 @@ function Letter(character) {
 			this.hide;
 		}
 	};
-}
+};
 
 module.exports = Letter;

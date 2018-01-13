@@ -1,8 +1,8 @@
 //Requires
 	var inquirer = require("inquirer");
 	var fs = require("fs");
-	var word = require("./word.js");
-	var letter = require("./letter.js");
+	var Word = require("./word.js");
+	var Letter = require("./letter.js");
 //Letters object
 	//this is not a constructor because there is only one.
 	var letters = {
@@ -59,8 +59,11 @@
 	}
 
 //Make a new word!
+	var curWord = new Word();
 	function newWord(argument) {
-		// body...
+		curWord.reset(wordLists.curList);
+		// console.log(curWord.word);
+		// letterPicker();
 	}
 //Start up inquirer
 	var wordLists = {

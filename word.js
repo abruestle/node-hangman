@@ -2,15 +2,11 @@ var fs = require('fs')
 
 var allLists = ["words.txt","wordsRPG.txt", "words1000.txt"];
 
-function Word(type) {
+function Word() {
 	this.word = "";
-	this.reset = function(list) {
-		//Select used list (for "any" goes with any list, otherwise goes with )
-			if (list == "any" || !list) {
-				listUsed = allLists[Math.floor(Math.random()*allLists.length)];
-			} else {
-				listUsed = list + ".txt";
-			}
+	this.reset = function(lists) {
+		//Select used list
+			listUsed = lists[Math.floor(Math.random()*lists.length)] + ".txt";
 		//makes a new word
 			fs.readFile(listUsed, "utf8", function(error, data) {
 				// If the code experiences any errors it will log the error to the console.
@@ -52,6 +48,6 @@ function Word(type) {
 		//gives array back of where character shows up
 
 	};
-}
+};
 
 module.exports = Word;
