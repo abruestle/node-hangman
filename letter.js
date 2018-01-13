@@ -1,18 +1,13 @@
 function Letter(character) {
 	this.letter = character;
 	this.shown = "_";
-	this.show = function() {
-		this.shown = this.letter;
-	};
-	this.hide = function() {
-		if(this.letter == this.letter.toUpperCase())
-		this.shown = "_";
-	};
 	this.check = function(dataArr) {
 		if(dataArr.indexOf(this.letter) != -1) {
-			this.show;
+			this.shown = this.letter;
 		} else {
-			this.hide;
+			if(this.letter == this.letter.toUpperCase()){
+				this.shown = "_";
+			}
 		}
 	};
 };

@@ -43,7 +43,34 @@
 		  ])
 		  .then(function(response) {
 		  	if(response.confirm){
+		  		fs.appendFile( "log.txt", "\nNew Round...", function(error) {
+
+				  // If an error was experienced we say it.
+				  if (error) {
+				    console.log(error);
+				    fs.appendFile( "log.txt", "\n"+ JSON.stringify(error, null, 2), function(err) {
+					  // If an error was experienced we say it.
+					  if (err) {
+					    console.log(err);
+					  }
+				  	});
+				  }
+				});
 		  		newWord();
+		  	} else {
+		  		fs.appendFile( "log.txt", "\nGame finished", function(error) {
+
+				  // If an error was experienced we say it.
+				  if (error) {
+				    console.log(error);
+				    fs.appendFile( "log.txt", "\n"+ JSON.stringify(error, null, 2), function(err) {
+					  // If an error was experienced we say it.
+					  if (err) {
+					    console.log(err);
+					  }
+				  	});
+				  }
+				});
 		  	}
 		  });
 
@@ -89,6 +116,19 @@
 		  		var curLetter = response.letter;
 		  		//update letters (so the letter is 'used')
 		    		letters.pick(curLetter);
+		    		fs.appendFile( "log.txt", "\n"+curLetter, function(error) {
+
+					  // If an error was experienced we say it.
+					  if (error) {
+					    console.log(error);
+					    fs.appendFile( "log.txt", "\n"+ JSON.stringify(error, null, 2), function(err) {
+						  // If an error was experienced we say it.
+						  if (err) {
+						    console.log(err);
+						  }
+					  	});
+					  }
+					});
 		    	//check if in word
 		    		if(curWord.word.indexOf(curLetter) != -1) {
 		    			//it is in the word!
@@ -96,15 +136,30 @@
 		    			//We only need to update the letters being shown if it has changed!
 		    			var won = true;
 				    	for (var i = 0; i < curWord.word.length; i++) {
-				    		console.log(letters.used);
+				    		// console.log(letters.used);
+				    		// console.log(JSON.stringify(letters.constructed[i]));
 							letters.constructed[i].check(letters.used);
-							console.log(letters.constructed[i].shown);
+				    		// console.log(JSON.stringify(letters.constructed[i]));
+							// console.log(letters.constructed[i].shown);
 							if (letters.constructed[i].shown == "_") {
 								won = false;
 							}
 						}
 						if (won) {
 							console.log("Yes! The word was '"+curWord.word+"'. You won!");
+							fs.appendFile( "log.txt", "\nWon", function(error) {
+
+							  // If an error was experienced we say it.
+							  if (error) {
+							    console.log(error);
+							    fs.appendFile( "log.txt", "\n"+ JSON.stringify(error, null, 2), function(err) {
+								  // If an error was experienced we say it.
+								  if (err) {
+								    console.log(err);
+								  }
+							  	});
+							  }
+							});
 							end();
 						} else {
 							letterPicker();
@@ -116,13 +171,26 @@
 		    			//need to check if too many letters are wrong.
 		    			if(letters.wrong >= letters.maxWrong) {
 		    				console.log("You ran out of tries! The word was "+curWord.word);
+		    				fs.appendFile( "log.txt", "\nLost", function(error) {
+
+							  // If an error was experienced we say it.
+							  if (error) {
+							    console.log(error);
+							    fs.appendFile( "log.txt", "\n"+ JSON.stringify(error, null, 2), function(err) {
+								  // If an error was experienced we say it.
+								  if (err) {
+								    console.log(err);
+								  }
+							  	});
+							  }
+							});
 		    				end();
 		    			} else {
 		    				letterPicker();
 		    			}
 		    		}
 		  	} else {
-		  		// letterPicker();
+		  		letterPicker();
 		  	}
 		    
 
@@ -141,10 +209,11 @@
 		// console.log(JSON.stringify(curWord, null, 2));
 		// console.log(curWord.word);
 		letters.reset();
+		curWord.word = curWord.word.trim();
 		for (var i = 0; i < curWord.word.length; i++) {
 			letters.constructed[i] = new Letter(curWord.word[i]);
 			// console.log(curWord.word[i]);
-		}
+		}			  		
 		letterPicker();
 	}
 //Start up inquirer
@@ -210,6 +279,19 @@
 	if (process.argv[2]) {
 		//if an input is given for list of words
 		wordLists.curList = process.argv.splice(2, process.argv.length - 2);
+    	fs.appendFile( "log.txt", "\nLists: "+JSON.stringify(wordLists.curList)+", Added from Command Line", function(error) {
+
+		  // If an error was experienced we say it.
+		  if (error) {
+		    console.log(error);
+		    fs.appendFile( "log.txt", "\n"+ JSON.stringify(error, null, 2), function(err) {
+			  // If an error was experienced we say it.
+			  if (err) {
+			    console.log(err);
+			  }
+		  	});
+		  }
+		});
 		newWord();
 	} else {
 		setList();

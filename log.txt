@@ -1,9 +1,24 @@
 
-joyful
-joyful
-frizzled
-frizzled
-exodus
-exodus
-galvanize
-galvanize
+Lists: ["words"], Added from Command Line
+kayak
+kayak
+Round finished
+jaywalk
+jaywalk
+Lists: ["words"], Added from Command Line
+iatrogenic
+iatrogenic
+a
+c
+i
+t
+r
+o
+n
+g
+e
+Won
+New Round...
+yachtsman
+yachtsman
+a
