@@ -1,7 +1,5 @@
 var fs = require('fs')
 
-var allLists = ["words.txt","wordsRPG.txt", "words1000.txt"];
-
 function Word() {
 	this.word = "";
 	this.reset = function(lists) {

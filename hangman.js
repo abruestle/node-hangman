@@ -3,8 +3,16 @@
 	var fs = require("fs");
 	var Word = require("./word.js");
 	var Letter = require("./letter.js");
-//Letters object
-	//this is not a constructor because there is only one.
+//Variables and objects used
+	var wordLists = {
+		names: ["Hardest Hangman Words", "Most Common Words", "Pathfinder RPG Words"],
+		filenames: ["words","words1000","wordsRPG"],
+		descriptions: ["The 200 hardest hangman words","The 1000 most commonly used words in the English language","Over 400 words from the Tabletop RPG 'Pathfinder'. All are real words, but some are rarely used."],
+		confirmText: ["These are very hard if you use normal hangman methods.", "These words are fairly well known.", "These are words from the Pathfinder RPG."],
+		choice: -1,
+		curList: []
+	}
+	var curWord = new Word();
 	var letters = {
 		used: [],
 		unused: [],
@@ -59,21 +67,12 @@
 	}
 
 //Make a new word!
-	var curWord = new Word();
 	function newWord(argument) {
 		curWord.reset(wordLists.curList);
 		// console.log(curWord.word);
 		// letterPicker();
 	}
 //Start up inquirer
-	var wordLists = {
-		names: ["Hardest Hangman Words", "Most Common Words", "Pathfinder RPG Words"],
-		filenames: ["words","words1000","wordsRPG"],
-		descriptions: [],
-		confirmText: ["These are very hard if you use normal hangman methods.", "These words are fairly well known.", "These are words from the Pathfinder RPG."],
-		choice: -1,
-		curList: []
-	}
 	function setList() {
 		inquirer
 		    .prompt([
