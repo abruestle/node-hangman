@@ -16,25 +16,57 @@
 	var letters = {
 		used: [],
 		unused: [],
+		constructed: [],
+		wrong: 0,
+		maxWrong: 6,
 		reset: function() {
 			letters.used = [];
 			letters.unused = 'abcdefghijklmnopqrstuvwxyz'.split('');
+			letters.constructed = [];
+			letters.wrong = 0;
 		},
 		pick: function(char) {
 			letters.used.push(char);
 			letters.unused.splice(letters.unused.indexOf(char),1);
 		}
 	}
-//Inquirer to play game
-	function letterPicker() {
+//Game end
+	function end() {
 		inquirer
 		  .prompt([
-		    // Here we create a basic text prompt.
+		    {
+		      type: "confirm",
+		      message: "Would you like to play again?",
+		      name: "confirm",
+		      default: true
+		    }
+		  ])
+		  .then(function(response) {
+		  	if(response.confirm){
+		  		newWord();
+		  	}
+		  });
+
+	}
+//Inquirer to play game
+	function letterPicker() {
+		//create blanks
+			var blanks = "";
+			for (var i = 0; i < curWord.word.length; i++) {
+				if (i > 0) {
+					blanks = blanks + " ";
+				}
+				blanks = blanks + letters.constructed[i].shown;
+			}
+			console.log(blanks);
+		//inquirer
+		inquirer
+		  .prompt([
 		    {
 		      type: "list",
 		      message: "Pick a letter!",
 		      choices: letters.unused,
-		      name: "letter",
+		      name: "letter"
 			    //If validating rather than list
 			      // validate: function(char) {
 			      // 	if(letters.used.indexOf(char) == -1) {
@@ -44,7 +76,6 @@
 			      // 	}
 			      	
 			      // }
-		      
 		    },
 		    {
 		      type: "confirm",
@@ -55,10 +86,43 @@
 		  ])
 		  .then(function(response) {
 		  	if(response.confirm){
-		  		//update letters
-		    		letters.pick(response.letter);
+		  		var curLetter = response.letter;
+		  		//update letters (so the letter is 'used')
+		    		letters.pick(curLetter);
 		    	//check if in word
-		    	//update each letter shown
+		    		if(curWord.word.indexOf(curLetter) != -1) {
+		    			//it is in the word!
+		    			console.log(curLetter+" is in the word!");
+		    			//We only need to update the letters being shown if it has changed!
+		    			var won = true;
+				    	for (var i = 0; i < curWord.word.length; i++) {
+				    		console.log(letters.used);
+							letters.constructed[i].check(letters.used);
+							console.log(letters.constructed[i].shown);
+							if (letters.constructed[i].shown == "_") {
+								won = false;
+							}
+						}
+						if (won) {
+							console.log("Yes! The word was '"+curWord.word+"'. You won!");
+							end();
+						} else {
+							letterPicker();
+						}
+		    		} else {
+		    			//it is not in the word...
+		    			console.log(curLetter+" is not in the word...");
+		    			letters.wrong++;
+		    			//need to check if too many letters are wrong.
+		    			if(letters.wrong >= letters.maxWrong) {
+		    				console.log("You ran out of tries! The word was "+curWord.word);
+		    				end();
+		    			} else {
+		    				letterPicker();
+		    			}
+		    		}
+		  	} else {
+		  		// letterPicker();
 		  	}
 		    
 
@@ -67,10 +131,21 @@
 	}
 
 //Make a new word!
-	function newWord(argument) {
-		curWord.reset(wordLists.curList);
+	function newWord() {
+		// console.log(JSON.stringify(wordLists.curList, null, 2));
+		curWord.reset(wordLists.curList, newWord2);
+	}
+	//this portion happens after coming back from reseting the word.
+	function newWord2(choice) {
+		curWord.word = choice;
+		// console.log(JSON.stringify(curWord, null, 2));
 		// console.log(curWord.word);
-		// letterPicker();
+		letters.reset();
+		for (var i = 0; i < curWord.word.length; i++) {
+			letters.constructed[i] = new Letter(curWord.word[i]);
+			// console.log(curWord.word[i]);
+		}
+		letterPicker();
 	}
 //Start up inquirer
 	function setList() {

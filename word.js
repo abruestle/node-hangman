@@ -2,7 +2,7 @@ var fs = require('fs')
 
 function Word() {
 	this.word = "";
-	this.reset = function(lists) {
+	this.reset = function(lists, func) {
 		//Select used list
 			listUsed = lists[Math.floor(Math.random()*lists.length)] + ".txt";
 		//makes a new word
@@ -21,7 +21,7 @@ function Word() {
 			  		var allOptions = data.split("\n");
 			  	// We will then print the contents of data
 			  		var randomChoice = allOptions[Math.floor( Math.random() * allOptions.length)];
-					console.log(randomChoice);
+					// console.log(randomChoice);
 					fs.appendFile( "log.txt", "\n" + randomChoice, function(error) {
 						// If an error was experienced we say it.
 							if (error) {
@@ -38,6 +38,7 @@ function Word() {
 							}
 			  		});
 			  	//This is all asyncronous! We need something to go back!
+			  	func(randomChoice);
 
 			});
 
