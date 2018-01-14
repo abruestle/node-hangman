@@ -5,10 +5,10 @@
 	var Letter = require("./letter.js");
 //Variables and objects used
 	var wordLists = {
-		names: ["Hardest Hangman Words", "Most Common Words", "Pathfinder RPG Words"],
-		filenames: ["words","words1000","wordsRPG"],
-		descriptions: ["The 200 hardest hangman words","The 1000 most commonly used words in the English language","Over 400 words from the Tabletop RPG 'Pathfinder'. All are real words, but some are rarely used."],
-		confirmText: ["These are very hard if you use normal hangman methods.", "These words are fairly well known.", "These are words from the Pathfinder RPG."],
+		names: ["Hardest Hangman Words", "Most Common Words", "Pathfinder RPG Words","Easy Words","SAT Volcab","GRE Volcab"],
+		filenames: ["words","words1000","wordsRPG","wordseasykids","wordsSAT","wordsGRE"],
+		descriptions: ["The 200 hardest hangman words","The 1000 most commonly used words in the English language","Over 400 words from the Tabletop RPG 'Pathfinder'. All are real words, but some are rarely used.","A list of easy words suited for kids.","Words to prepare for the SATs.","Words to prepare for the GREs."],
+		confirmText: ["These are very hard if you use normal hangman methods.", "These words are fairly well known.", "These are words from the Pathfinder RPG.","These are easy.","Study well!","Study hard!"],
 		choice: -1,
 		curList: []
 	}
