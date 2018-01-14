@@ -30,6 +30,13 @@
 			letters.unused.splice(letters.unused.indexOf(char),1);
 		}
 	}
+	Letter.prototype.check = function(dataArr) {
+		if(dataArr.indexOf(this.letter) != -1 || this.letter == this.letter.toUpperCase()) {
+			this.shown = this.letter;
+		} else {
+			this.shown = "_";
+		}
+	};
 //Game end
 	function end() {
 		inquirer
@@ -135,7 +142,10 @@
 		    			console.log(curLetter+" is in the word!");
 		    			//We only need to update the letters being shown if it has changed!
 		    			var won = true;
+		    			
 				    	for (var i = 0; i < curWord.word.length; i++) {
+		    				// console.log("Cur.word.length:"+curWord.word.length+"\nWon: " + won + "\nOther" + JSON.stringify(letters.constructed, null, 2));
+
 				    		// console.log(letters.used);
 				    		// console.log(JSON.stringify(letters.constructed[i]));
 							letters.constructed[i].check(letters.used);
